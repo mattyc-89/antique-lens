@@ -17,13 +17,13 @@ dropZone.addEventListener('dragover', (e) => {
     // Prevent default behavior (e.g., opening the file in a new tab)
     e.preventDefault();
     // Add visual feedback to show it's a valid drop zone
-    dropZone.classList.add('border-dotted', 'bg-gray-50'); // Tailwind classes for highlight
+    dropZone.classList.add('border-primary', 'bg-blue-600\/5'); // Tailwind classes for highlight
 });
 
 // Add 'dragleave' event listener
 dropZone.addEventListener('dragleave', () => {
     // Remove visual feedback
-    dropZone.classList.remove('border-dotted', 'bg-gray-50');
+    dropZone.classList.remove('border-primary', 'bg-blue-600\/5');
 });
 
 // Add 'drop' event listener
@@ -31,7 +31,7 @@ dropZone.addEventListener('drop', (e) => {
     // Prevent default browser behavior
     e.preventDefault();
     // Remove visual feedback
-    dropZone.classList.remove('border-dotted', 'bg-gray-50');
+    dropZone.classList.remove('border-primary', 'bg-blue-600\/5');
 
     // Get the file from the drop event
     const file = e.dataTransfer.files[0];
@@ -53,7 +53,7 @@ function validateAndProcessFile(file) {
             fileInput.value = '';
             return;
         }
-        
+
         // Create a new DataTransfer object and add the file to it
         const dataTransfer = new DataTransfer();
         dataTransfer.items.add(file);
