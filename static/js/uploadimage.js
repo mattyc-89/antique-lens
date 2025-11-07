@@ -1,6 +1,6 @@
 // Get a reference to the drop zone and the file input
-const dropZone = document.querySelector('label[for="gem-img"]');
-const fileInput = document.getElementById('gem-img');
+const dropZone = document.querySelector('label[for="ai-upload"]');
+const fileInput = document.getElementById('ai-upload');
 
 // Define valid image MIME types
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB

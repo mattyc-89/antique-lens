@@ -1,5 +1,5 @@
 <!-- Header -->
-<div class="grid lg:grid-cols-12 grid-cols-1 mt-6 gap-6">
+<div class="grid lg:grid-cols-12 grid-cols-1 mt-6 gap-6 min-h-max">
     <div class="lg:col-span-12">
         <div class="relative overflow-hidden rounded-md shadow-sm dark:shadow-gray-700 bg-white dark:bg-slate-900">
             <div class="p-6 flex items-center justify-between border-b border-gray-100 dark:border-gray-800">
@@ -8,27 +8,34 @@
             </div>
 
             <!-- Image upload + preview -->
-            <div class="grid lg:grid-cols-12 grid-cols-1 mt-6 gap-6">
-                <div class="lg:col-span-6">
+            <div class="grid md:grid-cols-12 grid-cols-1 mt-6 gap-6 p-6">
+                <div class="lg:col-span-8">
                     <div>
-                        <input id="gem-img" type="file" accept="image/*" class="hidden" />
+                        <input id="ai-upload" type="file" accept="image/*" class="hidden" />
 
-                        <label for="gem-img"
-                            class="flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-400 dark:border-gray-600 rounded-md cursor-pointer hover:border-blue-500 transition-colors duration-200 ease-in-out">
-                            <svg class="w-12 h-12 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M7 16a4 4 0 01-4-4v-1.5a4 4 0 014-4h10a4 4 0 014 4v1.5a4 4 0 01-4 4H7z" />
+                        <label for="ai-upload"
+                            class="flex flex-col items-center justify-center p-6 border-2 border-solid border-gray-400 dark:border-gray-600 rounded-md cursor-pointer hover:border-gray-800 hover:border-dotted transition-colors duration-200 ease-in-out">
+                            <svg class="w-96 h-96 font-nunito text-base text-slate-900 dark:text-white hover:text-primary dark:bg-slate-900" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <!-- <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M7 16a4 4 0 01-4-4v-1.5a4 4 0 014-4h10a4 4 0 014 4v1.5a4 4 0 01-4 4H7z" /> -->
                             </svg>
-                            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                            <p class="mt-2 font-nunito text-base text-slate-900 dark:text-white hover:text-primary dark:bg-slate-900">
                                 <span class="font-semibold text-blue-500">Click to upload</span> or drag and drop
                             </p>
                             <p class="mt-1 text-xs text-gray-500">JPEG, PNG, GIF, WEBP up to 10MB</p>
+                            <textarea id="gem-prompt" rows="5"
+                                class="w-full p-3 border border-gray-300 rounded-md dark:bg-slate-900 dark:text-slate-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Get started by clicking the button below, or ask something particular here before clicking.”"></textarea>
+                            <button id="gem-send"
+                                class="self-start inline-flex items-center gap-2 px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50">
+                                Ask Gemini
+                                </div>
                         </label>
-                    </div>
+                    
                 </div>
 
                 <!-- Prompt + action + result -->
-                <div class="lg:col-span-6">
+                <div class="lg:col-span-4">
                     <textarea id="gem-prompt" rows="5"
                         class="w-full p-3 border border-gray-300 rounded-md dark:bg-slate-900 dark:text-slate-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="Get started by clicking the button below, or ask something particular here before clicking.”"></textarea>
