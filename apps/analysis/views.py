@@ -9,7 +9,7 @@ from .analyze import analyze_image
 def analysis(request):
     form = UploadAntique()
     context = {'form': 'form'}
-    return render(request, 'analysis.html', context)
+    return render(request, 'index.html', context)
 
 def analyse_image_api(request):
     if request.method == 'POST':

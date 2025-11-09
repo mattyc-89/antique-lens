@@ -5,7 +5,7 @@ from django.conf import settings
 
 class Antique(models.Model):
     title = models.CharField(max_length=200)
-    year = models.IntegerField(max_length=4)
+    year = models.IntegerField
     description = models.TextField(blank=True, null=True)
 
     # The image file will be uploaded to MEDIA_ROOT/antique_images with a date-based subdirectory

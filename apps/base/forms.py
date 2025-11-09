@@ -1,5 +1,4 @@
 from django import forms
-from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from .models import User
 
@@ -12,9 +11,9 @@ class MyUserCreationForm(UserCreationForm):
         fields = ['name', 'email', 'password1', 'password2']
     
     base_input_classes = (
-        "form-input mt-3 w-full py-2 px-3 h-10 "
-        "bg-transparent dark:bg-slate-900 dark:text-slate-200 "
-        "rounded outline-none border border-gray-200 "
+        "form-input mt-3 w-full py-2 px-3 h-10"
+        "bg-transparent dark:bg-slate-900 dark:text-slate-200"
+        "rounded outline-none border border-gray-200"
         "focus:border-primary dark:border-gray-800 dark:focus:border-primary focus:ring-0"
     )
 
