@@ -1619,7 +1619,7 @@
   .h-80 {
     height: calc(var(--spacing) * 80);
   }
-  .h-\[46px\] {
+  . {
     height: 46px;
   }
   .h-\[50px\] {
