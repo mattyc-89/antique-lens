@@ -1,66 +1,111 @@
-// Get a reference to the drop zone and the file input
-const dropZone = document.querySelector('label[for="ai-upload"]');
-const fileInput = document.getElementById('ai-upload');
+// Get elements
+const dropZone = document.querySelector('label[for="img-upload"]');
+const fileInput = document.getElementById('img-upload');
 
-// Define valid image MIME types
+// Constants
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 const VALID_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
 
-// Add a change event listener to the file input
+/* -------------------------------------------------------------------------- */
+/* Event Listeners                              */
+/* -------------------------------------------------------------------------- */
+
+// 1. Handle the standard file selection (User clicks the button)
 fileInput.addEventListener('change', (e) => {
+    // We only need to VALIDATE here. The file is already in the input.
     const file = e.target.files[0];
-    validateAndProcessFile(file);
-});
-
-// Add 'dragover' event listener
-dropZone.addEventListener('dragover', (e) => {
-    // Prevent default behavior (e.g., opening the file in a new tab)
-    e.preventDefault();
-    // Add visual feedback to show it's a valid drop zone
-    dropZone.classList.add('border-primary', 'bg-blue-600\/5'); // Tailwind classes for highlight
-});
-
-// Add 'dragleave' event listener
-dropZone.addEventListener('dragleave', () => {
-    // Remove visual feedback
-    dropZone.classList.remove('border-primary', 'bg-blue-600\/5');
-});
-
-// Add 'drop' event listener
-dropZone.addEventListener('drop', (e) => {
-    // Prevent default browser behavior
-    e.preventDefault();
-    // Remove visual feedback
-    dropZone.classList.remove('border-primary', 'bg-blue-600\/5');
-
-    // Get the file from the drop event
-    const file = e.dataTransfer.files[0];
-    validateAndProcessFile(file);
-});
-
-// Function to validate and process the dropped or selected file
-function validateAndProcessFile(file) {
     if (file) {
-        if (!VALID_IMAGE_TYPES.includes(file.type)) {
-            alert('Please upload a valid image file (JPEG, PNG, GIF, WEBP).');
-            return;
-            // Clear the file input
-            fileInput.value = '';
+        if (!validateFile(file)) {
+            // If invalid, clear the input so they can try again
+            fileInput.value = ''; 
+        } else {
+             // Success! Proceed to preview or upload
+            handleSuccess(file);
         }
-        if (file.size > MAX_FILE_SIZE) {
-            alert('Image size exceeds the 10MB limit. Please upload a smaller file.');
-            // Clear the file input
-            fileInput.value = '';
-            return;
-        }
+    }
+});
 
-        // Create a new DataTransfer object and add the file to it
+// 2. Handle the Drop event
+dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    toggleHighlight(false); // Remove purple border
+
+    const file = e.dataTransfer.files[0];
+
+    // For drops, we must Validate AND Manually Update the input
+    if (file && validateFile(file)) {
+        
+        // Create a DataTransfer to update the fileInput
         const dataTransfer = new DataTransfer();
         dataTransfer.items.add(file);
-
-        // Assign the file to our hidden input field
         fileInput.files = dataTransfer.files;
 
-        console.log('File is valid and ready to be processed!');
+        handleSuccess(file);
     }
+});
+
+// 3. UI Feedback Events (Drag Over/Leave)
+dropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    toggleHighlight(true);
+});
+
+dropZone.addEventListener('dragleave', () => {
+    toggleHighlight(false);
+});
+
+/* -------------------------------------------------------------------------- */
+/* Helper Functions                               */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Checks file type and size.
+ * Returns true if valid, false otherwise.
+ */
+function validateFile(file) {
+    // Check Type
+    if (!VALID_IMAGE_TYPES.includes(file.type)) {
+        alert('Please upload a valid image file (JPEG, PNG, GIF, WEBP).');
+        return false;
+    }
+    
+    // Check Size
+    if (file.size > MAX_FILE_SIZE) {
+        alert('Image size exceeds the 10MB limit.');
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * Toggles the Tailwind classes for the drag zone
+ */
+function toggleHighlight(active) {
+    if (active) {
+        dropZone.classList.add('border-purple-600', 'bg-purple-600');
+    } else {
+        dropZone.classList.remove('border-purple-600', 'bg-purple-600');
+    }
+}
+
+/**
+ * What happens when we have a valid file?
+ */
+function handleSuccess(file) {
+    const previewContainer = document.getElementById('preview-container');
+    const previewImage = document.getElementById('image-preview');
+    const reader = new FileReader();
+
+    // 1. Tell the reader WHAT to do once it finishes reading the file
+    reader.onload = function(e) {
+        // e.target.result is the "Data URL" (a long string representing the image)
+        previewImage.src = e.target.result;
+        
+        // 2. Make the container visible by removing Tailwind's 'hidden' class
+        previewContainer.classList.remove('hidden');
+    }
+
+    // 3. Start reading the file
+    reader.readAsDataURL(file);
 }
