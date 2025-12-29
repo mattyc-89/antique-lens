@@ -93,17 +93,13 @@ function toggleHighlight(active) {
  * What happens when we have a valid file?
  */
 function handleSuccess(file) {
-    const previewContainer = document.getElementById('preview-container');
-    const previewImage = document.getElementById('image-preview');
+    const previewImage = document.getElementById('img-preview');
     const reader = new FileReader();
 
     // 1. Tell the reader WHAT to do once it finishes reading the file
     reader.onload = function(e) {
         // e.target.result is the "Data URL" (a long string representing the image)
         previewImage.src = e.target.result;
-        
-        // 2. Make the container visible by removing Tailwind's 'hidden' class
-        previewContainer.classList.remove('hidden');
     }
 
     // 3. Start reading the file
